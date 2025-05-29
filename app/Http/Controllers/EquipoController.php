@@ -70,10 +70,15 @@ class EquipoController extends Controller
 
 
     public function show($id)
-    {
-        $equipo = Equipo::with('jugadores')->findOrFail($id);
-        return view('equipos.show', compact('equipo'));
+{
+    $user = Auth::user();
+    if ($user->idEquipo != $id) {
+        abort(403, 'No tienes permiso para ver este equipo.');
     }
+
+    $equipo = Equipo::with('jugadores')->findOrFail($id);
+    return view('equipos.show', compact('equipo'));
+}
     public function create()
     {
         return view('equipos.create');

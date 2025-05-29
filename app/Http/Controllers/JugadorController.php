@@ -68,6 +68,8 @@ class JugadorController extends Controller
 
     public function destroy(Jugador $jugador)
     {
+        $jugador->estadisticas()->delete();
+        $jugador->accionPartido()->delete();
         $jugador->delete();
 
         return redirect()->route('equipos.show', $jugador->idEquipo)->with('success', 'Jugador eliminado correctamente.');

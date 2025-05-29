@@ -38,6 +38,11 @@ class Jugador extends Model
     {
         return $this->hasMany(EstadisticaPartido::class, 'idJugador');
     }
+        public function accionPartido()
+    {
+        return $this->hasMany(AccionPartido::class, 'idJugador');
+    }
+
     public function actualizarEstadisticas()
     {
         $estadisticas = EstadisticaPartido::where('idJugador', $this->id)->get();
