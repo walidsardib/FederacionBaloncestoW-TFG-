@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/equipos/profile/{equipo}', [EquipoController::class, 'profile'])->name('equipos.profile');
 
     //RUTAS LIGAS Y JORNADAS
-    Route::get('/ligas/{id}/edit', [LigaController::class, 'edit'])->name('ligas.edit');
+    //Route::get('/ligas/{id}/edit', [LigaController::class, 'edit'])->name('ligas.edit');
     Route::get('/ligas/{id}/delete', [LigaController::class, 'destroy'])->name('ligas.delete');
     Route::resource('ligas', LigaController::class);
     Route::post('ligas/generar-jornadas', [LigaController::class, 'generarJornadas'])->name('ligas.generarJornadas');
