@@ -25,33 +25,64 @@
 
 <body class="font-sans antialiased bg-gray-100">
     <nav class="bg-white border-b border-gray-200">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
+
             <img src="{{ asset('logo.png') }}" alt="Logo" class="w-40 h-30">
 
-            <div class="hidden md:flex space-x-4">
-                <a href="{{ route('equipos.index') }}"
-                    class="text-gray-700 hover:text-orange-500 font-medium">Inicio</a>
-                <a href="{{ route('ligas.index') }}"
-                    class="text-gray-700 hover:text-orange-500 font-medium">Competiciones</a>
-                <a href="{{ route('scouting.index') }}"
-                    class="text-gray-700 hover:text-orange-500 font-medium">Scouting</a>
-                <a href="{{ route('noticias.index') }}"
-                    class="text-gray-700 hover:text-orange-500 font-medium">Noticias</a>
-                <a href="{{ route('partidos.directo') }}"
-                    class="text-gray-700 hover:text-orange-500 font-medium">Partidos
-                    en
-                    directo</a>
+            <!-- Menú principal escritorio -->
+            <div class="hidden md:flex space-x-4" id="menuPrincipal">
+                <a href="{{ route('index') }}" class="text-gray-700 hover:text-orange-500 font-medium">Inicio</a>
+                <a href="{{ route('ligas.index') }}" class="text-gray-700 hover:text-orange-500 font-medium">Competiciones</a>
+                <a href="{{ route('scouting.index') }}" class="text-gray-700 hover:text-orange-500 font-medium">Scouting</a>
+                <a href="{{ route('noticias.index') }}" class="text-gray-700 hover:text-orange-500 font-medium">Noticias</a>
+                <a href="{{ route('partidos.directo') }}" class="text-gray-700 hover:text-orange-500 font-medium">Partidos en directo</a>
             </div>
 
+            <!-- Botón hamburguesa móvil -->
+            <div class="md:hidden flex items-center">
+                <button id="btnMenuMovil" class="text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars fa-lg"></i>
+                </button>
+            </div>
+
+            @auth
             <div class="flex items-center space-x-4">
-                <a href="{{ route('profile.edit') }}" class="text-gray-700 font-medium">{{ Auth::user()->name }}</a>
+
+                <!-- WRAPPER DEL DROPDOWN -->
+                <div class="relative group">
+
+                    <a class="text-gray-700 font-medium cursor-pointer">
+                        {{ Auth::user()->name }}
+                    </a>
+
+                    <ul
+                        class="absolute left-1/2 -translate-x-1/2 mt-2 bg-white shadow-lg rounded-md py-2 w-40 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <li>
+                            <a href="{{route('equipos.index')}}" class="block px-4 py-2 hover:bg-gray-100 text-center">Mi equipo</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('profile.edit') }}" class="block px-4 py-2 hover:bg-gray-100 text-center">Editar perfil</a>
+                        </li>
+                    </ul>
+
+                </div>
+
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit" class="text-red-500 hover:text-red-700 font-medium">
                         Salir
                     </button>
                 </form>
+
             </div>
+            @endauth
+
+            @guest
+            <div class="flex items-center space-x-4">
+                <a href="{{ route('login') }}">Iniciar Sesión</a>
+            </div>
+            @endguest
+
         </div>
     </nav>
 
@@ -59,5 +90,38 @@
         {{ $slot }}
     </main>
 </body>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // Dropdown perfil (existente)
+    const btn = document.getElementById("perfilBtn");
+    const menuPerfil = document.getElementById("submenuPerfil");
+    const wrapper = document.getElementById("perfilWrapper");
+
+    if(btn) {
+        btn.addEventListener("click", () => {
+            menuPerfil.classList.toggle("hidden");
+        });
+
+        document.addEventListener("click", (e) => {
+            if (!wrapper.contains(e.target)) {
+                menuPerfil.classList.add("hidden");
+            }
+        });
+    }
+
+    // Menú móvil
+    const btnMovil = document.getElementById("btnMenuMovil");
+    const menu = document.getElementById("menuPrincipal");
+
+    btnMovil.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+        menu.classList.toggle("flex");
+        menu.classList.toggle("flex-col"); // Vertical en móvil
+        menu.classList.toggle("space-x-0"); // Quitar espacio horizontal en móvil
+        menu.classList.toggle("space-y-2"); // Añadir espacio vertical en móvil
+    });
+});
+</script>
 
 </html>

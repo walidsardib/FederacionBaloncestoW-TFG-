@@ -1,5 +1,6 @@
 <x-app-layout>
     <div class="container mx-auto py-8">
+    @auth
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-2xl font-bold">Competiciones</h1>
             @if (auth()->user()->admin === 1)
@@ -14,7 +15,7 @@
                 </div>
             @endif
         </div>
-
+    @endauth
         @if (session('success'))
             <div class="bg-green-500 text-white p-4 rounded mb-4">
                 {{ session('success') }}
@@ -107,7 +108,7 @@
                                 <p class="text-gray-600"><strong>Fecha:</strong>
                                     {{ \Carbon\Carbon::parse($partido->fecha)->format('d/m/Y') }}</p>
                                 <p class="text-gray-600"><strong>Hora:</strong> {{ $partido->hora }}</p>
-
+                              @auth          
                                 @if (auth()->user()->admin === 1)
                                     @if (!$partido->finalizado)
                                         <a href="{{ route('partidos.show', $partido->id) }}" class="text-blue-500 hover:underline">
@@ -125,7 +126,7 @@
                                         </button>
                                     </form>
                                 @endif
-
+                              @endauth          
                                 @if($partido->finalizado)
                                     <a href="{{ route('partidos.estadisticas', $partido->id) }}"
                                         class="text-blue-500 hover:underline">
@@ -147,7 +148,7 @@
                     </div>
                 @endforeach
             </div>
-
+            @auth
             @if(auth()->user()->admin === 1)
                 <div class="mt-4 text-center">
                     <a href="{{ route('partidos.create', ['jornada' => $jornadaSeleccionada, 'liga' => request('liga')]) }}"
@@ -156,6 +157,7 @@
                     </a>
                 </div>
             @endif
+            @endauth
         @else
             <p class="text-center mt-3 text-gray-500">No hay partidos registrados en esta jornada.</p>
         @endif

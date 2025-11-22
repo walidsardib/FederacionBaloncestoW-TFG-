@@ -1,5 +1,6 @@
 <x-app-layout>
     <div class="container mx-auto py-8">
+        @auth
         @if(auth()->user()->admin == 1)
             <div class="mb-4 flex justify-end space-x-4">
                 <a href="{{ route('noticias.edit', $noticia->id) }}"
@@ -19,7 +20,7 @@
             </div>
 
         @endif
-
+        @endauth    
         <div class="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col md:flex-row">
             @if($noticia->imagen)
                 <div class="md:w-1/2">

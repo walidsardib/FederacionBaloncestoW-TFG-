@@ -43,6 +43,7 @@
     <!-- Enlace para crear cuenta -->
     <div class="mt-4 text-center">
         <p class="text-gray-700 dark:text-gray-400">{{ __('¿No tienes una cuenta?') }}</p>
-        <a href="{{ route('register') }}" class="text-blue-500 hover:underline">{{ __('Crear una cuenta') }}</a>
+        <a href="{{ route('register') }}" class="text-blue-500 hover:underline me-4">{{ __('Crear una cuenta') }}</a>
+        <a href="{{ route('equipos.index') }}" class="text-blue-500 hover:underline ">{{ __('Continuar como invitado') }}</a>
     </div>
 </x-guest-layout>

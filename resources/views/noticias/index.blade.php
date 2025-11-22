@@ -1,5 +1,6 @@
 <x-app-layout>
     <div class="container mx-auto py-8">
+        @auth
         @if(auth()->user()->admin == 1)
             <div class="mb-4 text-end">
                 <a href="{{ route('noticias.create') }}"
@@ -8,7 +9,7 @@
                 </a>
             </div>
         @endif
-
+       @endauth     
         <h1 class="text-3xl font-bold text-center mb-6">Noticias</h1>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">

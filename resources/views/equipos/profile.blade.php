@@ -98,7 +98,7 @@
                         <p class="text-gray-600"><strong>Fecha:</strong>
                             {{ \Carbon\Carbon::parse($ultimoPartido->fecha)->format('d/m/Y') }}</p>
                         <p class="text-gray-600"><strong>Hora:</strong> {{ $ultimoPartido->hora }}</p>
-
+                      @auth          
                         @if (auth()->user()->admin === 1)
                             @if (!$ultimoPartido->finalizado)
                                 <a href="{{ route('partidos.show', $ultimoPartido->id) }}" class="text-blue-500 hover:underline">
@@ -116,7 +116,7 @@
                                 </button>
                             </form>
                         @endif
-
+                      @endauth      
                         <a href="{{ route('partidos.estadisticas', $ultimoPartido->id) }}"
                             class="text-blue-500 hover:underline">
                             Información del Partido
@@ -158,7 +158,7 @@
                         <p class="text-gray-600"><strong>Fecha:</strong>
                             {{ \Carbon\Carbon::parse($siguientePartido->fecha)->format('d/m/Y') }}</p>
                         <p class="text-gray-600"><strong>Hora:</strong> {{ $siguientePartido->hora }}</p>
-
+                    @auth                              
                         @if (auth()->user()->admin === 1)
                             @if (!$siguientePartido->finalizado)
                                 <a href="{{ route('partidos.show', $siguientePartido->id) }}" class="text-blue-500 hover:underline">
@@ -176,6 +176,7 @@
                                 </button>
                             </form>
                         @endif
+                    @endauth    
                     </div>
                     <div class="text-4xl font-bold tracking-wider text-gray-900">
                         {{ $siguientePartido->ptsVisitante }}

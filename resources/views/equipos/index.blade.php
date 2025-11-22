@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container mx-auto py-8">
         <h1 class="text-2xl font-bold mb-4">Inicio</h1>
-
+        @auth
         @if ($equipo)
             <div class="bg-white shadow rounded p-4 flex justify-between items-center">
                 <div>
@@ -33,6 +33,7 @@
         @endif
 
         @if (!empty($liga) && count($liga) > 0)
+        <div class="clasificacion my-10">
             <h1 class="text-2xl font-bold">Clasificación</h1>
             <table class="table-auto w-full border-collapse border border-gray-300 rounded-lg overflow-hidden shadow-lg">
                 <thead class="bg-orange-500 text-white">
@@ -66,4 +67,10 @@
             <p class="text-gray-500">Tu equipo no está en ninguna liga o no tienes un equipo</p>
         @endif
     </div>
+    @endauth
+    @guest
+    <div class="">
+        Inicia sesion para poder añadir tus secciones/jugadores/equipos favoritas a la pagina de inicio        
+    </div>
+    @endguest
 </x-app-layout>
